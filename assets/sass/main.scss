@@ -5,15 +5,60 @@
 $fa-font-path:   "../../bower_components/font-awesome/fonts";
 @import "../../bower_components/font-awesome/scss/font-awesome.scss";
 
+$red: #E57373;
+$indigo: #8C9EFF;
+$blue: #03A9F4;
+$green: #4CAF50;
+$yellow: #CDDC39;
+$orange: #FF6F00;
+$brown: #BCAAA4;
+$gray: #90A4AE;
+
+body {
+    transition: background-color .75s ease;
+}
+
+.red-bg {
+    background-color: $red;
+}
+
+.indigo-bg {
+    background-color: $indigo;
+}
+
+.blue-bg {
+    background-color: $blue;
+}
+
+.green-bg {
+    background-color: $green;
+}
+
+.yellow-bg {
+    background-color: $yellow;
+}
+
+.orange-bg {
+    background-color: $orange;
+}
+
+.brown-bg {
+    background-color: $brown;
+}
+.gray-bg {
+    background-color: $gray;
+}
+
 .name-wrap {
     animation: fadein 1.5s;
 
-    span {
+    p {
         position: absolute;
-        top: 40%;
+        top: 30%;
         left: 5%;
         font-size: 96px;
         text-transform: uppercase;
+        //mix-blend-mode: difference;
     }
 }
 
