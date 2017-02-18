@@ -1,0 +1,23 @@
+// PureCSS
+@import "../../bower_components/purecss-sass/vendor/assets/stylesheets/_purecss.scss";
+
+// Font Awesome
+$fa-font-path:   "../../bower_components/font-awesome/fonts";
+@import "../../bower_components/font-awesome/scss/font-awesome.scss";
+
+.name-wrap {
+    animation: fadein 1.5s;
+
+    span {
+        position: absolute;
+        top: 40%;
+        left: 5%;
+        font-size: 96px;
+        text-transform: uppercase;
+    }
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
