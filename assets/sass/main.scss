@@ -5,60 +5,64 @@
 $fa-font-path:   "../../bower_components/font-awesome/fonts";
 @import "../../bower_components/font-awesome/scss/font-awesome.scss";
 
-$red: #E57373;
-$indigo: #8C9EFF;
-$blue: #03A9F4;
-$green: #4CAF50;
-$yellow: #CDDC39;
-$orange: #FF6F00;
-$brown: #BCAAA4;
-$gray: #90A4AE;
+@mixin vertical-center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 body {
-    transition: background-color .75s ease;
+    animation: fadein 1.5s;
+    height: 100%;
+
+    &.animate-bg {
+        transition: background-color 2s ease;
+    }
 }
 
-.red-bg {
-    background-color: $red;
-}
+.aesthetic {
+    font-size: .75rem;
+    position:fixed;
+    right: 2px;
+    top: 2px;
 
-.indigo-bg {
-    background-color: $indigo;
-}
-
-.blue-bg {
-    background-color: $blue;
-}
-
-.green-bg {
-    background-color: $green;
-}
-
-.yellow-bg {
-    background-color: $yellow;
-}
-
-.orange-bg {
-    background-color: $orange;
-}
-
-.brown-bg {
-    background-color: $brown;
-}
-.gray-bg {
-    background-color: $gray;
+    span {
+        &:hover {
+            cursor:pointer;
+        }
+    }
 }
 
 .name-wrap {
-    animation: fadein 1.5s;
+    @include vertical-center;
+    left: 5%;
 
-    p {
-        position: absolute;
-        top: 30%;
-        left: 5%;
+    p.name {
         font-size: 96px;
         text-transform: uppercase;
+        margin: 0;
         //mix-blend-mode: difference;
+    }
+}
+
+.social-links {
+    @include vertical-center;
+
+    div {
+        display: inline-block;
+        float: left;
+        clear: both;
+        margin: 15px 0;
+        a {
+            color: #212121;
+            text-decoration: none;
+            transition: text-shadow .5s ease;
+
+            &:hover, &:active {
+                color: #000000;
+                text-shadow: 3px 1px 3px #666;
+            }
+        }
     }
 }
 
