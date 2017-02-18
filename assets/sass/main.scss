@@ -1,9 +1,13 @@
 // PureCSS
-@import "../../bower_components/purecss-sass/vendor/assets/stylesheets/_purecss.scss";
+@import "purecss/_purecss.scss";
 
 // Font Awesome
-$fa-font-path:   "../../bower_components/font-awesome/fonts";
-@import "../../bower_components/font-awesome/scss/font-awesome.scss";
+$fa-font-path:   "../fonts";
+@import "font-awesome/font-awesome.scss";
+
+
+$bg-transition-time: 2s;
+
 
 @mixin vertical-center {
     position: absolute;
@@ -16,7 +20,7 @@ body {
     height: 100%;
 
     &.animate-bg {
-        transition: background-color 2s ease;
+        transition: background-color $bg-transition-time ease;
     }
 }
 

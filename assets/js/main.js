@@ -1,5 +1,6 @@
 var name = "ANDREW JARVIS";
 var nameArray = name.split("");
+var bgTransitionTime = 2000;
 var startNameIndex = 0;
 var bgColorIndex = 0;
 var bgIncrementer = Math.random() < 0.5 ? -1 : 1;
@@ -57,7 +58,7 @@ $(function() {
     // Set random background initially
     setRandomBackground();
     startNameInterval(15, 7, function() {
-        startBgInterval(2000);
+        startBgInterval(bgTransitionTime);
     });
 
     $("#bgColorToggle").click(function() {
