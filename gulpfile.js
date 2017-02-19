@@ -2,8 +2,10 @@ var gulp = require("gulp");
 var watch = require("gulp-watch");
 var sass = require("gulp-sass");
 var minify = require("gulp-minify-css");
-var autoprefixer = require('gulp-autoprefixer');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
 var runSequence = require('run-sequence');
+
 
 gulp.task('sass', function() {
     return gulp.src('assets/sass/main.scss')
@@ -13,11 +15,11 @@ gulp.task('sass', function() {
 
 gulp.task('postcss', function() {
     return gulp.src('assets/css/*.css')
-        .pipe(autoprefixer({
+        .pipe(postcss([ autoprefixer({
             remove: false,
             browsers: ["> 1%"]
-        }))
-        .pipe(minify())
+        }) ]))
+        //.pipe(minify())
         .pipe(gulp.dest('assets/css'));
 });
 

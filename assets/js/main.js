@@ -19,11 +19,11 @@ var colorSchemes = {
         '#4CAF50'
     ],
     vaporwave: [
-        '#FF6AD5',
-        '#AD8CFF',
-        '#94D0FF',
-        '#C774E8',
-        '#8795E8'
+        '#6feae6',
+        '#f6a3ef',
+        '#50d8ec',
+        '#dd6dfb',
+        '#eecd69'
     ]
 };
 var colorSchemeNames = {
@@ -58,17 +58,34 @@ $(function() {
     // Set random background initially
     setRandomBackground();
     startNameInterval(15, 7, function() {
-        startBgInterval(bgTransitionTime);
+        if (colorSchemeNamesKeys[colorSchemeIndex] == 'default') {
+            startBgInterval(bgTransitionTime);
+        }
     });
 
     $("#bgColorToggle").click(function() {
         // Get the current color scheme and change it
         colorSchemeIndex = stepArrayIndex(colorSchemesArray, colorSchemeIndex+1);
-
         // Set current color scheme values
         currentColorScheme = colorSchemesArray[colorSchemeIndex];
         // Reset color index
         bgColorIndex = getRandomIndex(currentColorScheme);
+
+        switch (colorSchemeNamesKeys[colorSchemeIndex]) {
+            case 'vaporwave':
+                // Stop rotating
+                clearInterval(window.bgInterval);
+                // Set the URL relative to the html file
+
+                $('body').css('background-color', '').addClass('vaporwave');
+                break;
+
+            default:
+                // Set background color, remove image, start rotating
+                setBackground(bgColorIndex);
+                $('body').removeClass('vaporwave');
+                startBgInterval(bgTransitionTime);
+        }
 
         // Set color scheme name and text
         $(this).data('color-scheme', colorSchemeNamesKeys[getNextColorSchemeIndex()]);
@@ -142,6 +159,7 @@ function startNameInterval(delay, separation, cb) {
     window.nameInterval = setInterval(function() {
         // Set name
         var generatedName = generateName(tick, delay, separation);
+        $("#name").data('name', generatedName);
         $("#name").text(generatedName);
 
         // Stop interval when name is filled in
