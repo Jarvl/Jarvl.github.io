@@ -60,13 +60,10 @@ $(function() {
     $("#bgColorToggle").text(colorSchemeNamesValues[getNextColorSchemeIndex()]);
 
     startNameInterval(15, 7);
-
-    // Start background rotation
-    if (colorSchemeNamesKeys[colorSchemeIndex] == 'default') {
-        startBgInterval(bgTransitionTime);
-    }
+    switchColorScheme();
 
     $("#bgColorToggle").click(function() {
+        colorSchemeIndex++;
         switchColorScheme();
 
         // Set color scheme name and text
@@ -83,7 +80,7 @@ function getNextColorSchemeIndex() {
 
 function switchColorScheme() {
     // Get the current color scheme and change it
-    colorSchemeIndex = stepArrayIndex(colorSchemesArray, colorSchemeIndex+1);
+    colorSchemeIndex = stepArrayIndex(colorSchemesArray, colorSchemeIndex);
     // Set current color scheme values
     currentColorScheme = colorSchemesArray[colorSchemeIndex];
     // Reset color index
@@ -96,12 +93,14 @@ function switchColorScheme() {
             // Set the URL relative to the html file
 
             $('body').css('background-color', '').addClass('vaporwave');
+            $('#name').addClass('glitch');
             break;
 
         default:
             // Set background color, remove image, start rotating
             setBackground(bgColorIndex);
             $('body').removeClass('vaporwave');
+            $('#name').removeClass('glitch');
             startBgInterval(bgTransitionTime);
     }
 }

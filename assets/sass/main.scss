@@ -89,18 +89,20 @@ body {
     &.animate-bg {
         transition: background-color $bg-transition-time ease;
     }
+}
 
-    &.vaporwave {
-        background: url("../img/vaporwave/2.jpg") no-repeat center right fixed;
-        background-size: cover;
+.vaporwave {
+    background: url("../img/vaporwave/hm.jpg") no-repeat center right fixed;
+    background-size: cover;
 
-        .name-wrap p.name {
-            font-family: AlienEncountersItal, sans-serif, Helvetica;
-            color:white;
-            position:relative;
-            width:1000px;
-            margin:0 auto;
+    .content-wrap .name-wrap p.name {
+        font-family: AlienEncountersItal, sans-serif, Helvetica;
+        color:white;
+        margin:0 auto;
+        position:relative;
+        width:1000px;
 
+        &.glitch {
             &:after {
                 content:attr(data-name);
                 position:absolute;
@@ -180,13 +182,17 @@ body {
             }
 
             a {
-                color: #212121;
+                color: #333;
                 text-decoration: none;
                 transition: text-shadow .5s ease;
 
-                &:hover, &:active {
-                    color: #000000;
-                    text-shadow: 3px 1px 3px #666;
+                &:hover {
+                    color: #111;
+                    text-shadow: 3px 1px 30px #333;
+                }
+
+                &:active {
+                    color: #000;
                 }
             }
         }
