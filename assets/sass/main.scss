@@ -131,7 +131,6 @@ body {
 .content-wrap {
     @include vertical-center;
     left: 3%;
-    width: 100%;
 
     @include bp-xsmall {
         top: 25%;
@@ -196,8 +195,11 @@ body {
 
 
 .aesthetic {
-    display: inline-block;
-    float:right;
+    //display: inline-block;
+    //float:right;
+    position: fixed;
+    top: .25rem;
+    right: .25rem;
 
     span:hover {
         cursor:pointer;
