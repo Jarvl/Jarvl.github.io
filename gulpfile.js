@@ -29,7 +29,7 @@ gulp.task('full-sass', function(done) {
     });
 });
 
-gulp.task('watch-sass', function(done) {
+gulp.task('watch-sass', ['full-sass'], function(done) {
     return gulp.watch('assets/sass/main.scss', ['full-sass']);
 });
 

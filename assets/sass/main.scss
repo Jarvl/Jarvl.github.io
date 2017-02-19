@@ -19,66 +19,6 @@ $bg-transition-time: 2s;
     transform: translateY(-50%);
 }
 
-/*
-  (TEXT) PARAMS
-  =================
-  1. Namespace
-  2. Intensity
-  3. Text color
-  4. Background color (flat)
-  5. Highlight #1 color
-  6. Highlight #2 color
-  7. Width (px)
-  8. Height (px)
-*/
-
-@mixin textGlitch($name, $intensity, $textColor, $background, $highlightColor1, $highlightColor2, $width, $height) {
-
-  color: $textColor;
-  position: relative;
-  $steps: $intensity;
-
-  // Ensure the @keyframes are generated at the root level
-  @at-root {
-    // We need two different ones
-    @for $i from 1 through 2 {
-      @keyframes #{$name}-anim-#{$i} {
-        @for $i from 0 through $steps {
-          #{percentage($i*(1/$steps))} {
-            clip: rect(
-              random($height)+px,
-              $width+px,
-              random($height)+px,
-              0
-            );
-          }
-        }
-      }
-    }
-  }
-  &:before,
-  &:after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: $background;
-    clip: rect(0, 0, 0, 0);
-  }
-  &:after {
-    left: 2px;
-    text-shadow: -1px 0 $highlightColor1;
-    animation: #{$name}-anim-1 2s infinite linear alternate-reverse;
-  }
-  &:before {
-    left: -2px;
-    text-shadow: 2px 0 $highlightColor2;
-    animation: #{$name}-anim-2 3s infinite linear alternate-reverse;
-  }
-
-}
-
 
 /********* STYLES *********/
 
@@ -88,8 +28,19 @@ $bg-transition-time: 2s;
     font-weight: normal;
 }
 
+@font-face {
+    font-family: ExoBold;
+    src: url('../fonts/Exo-Bold.otf');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: ExoRegular;
+    src: url('../fonts/Exo-Regular.otf');
+    font-weight: normal;
+}
+
 body {
-    font-family: "Times New Roman", Times, serif;
     animation: fadein 1.5s;
     height: 100%;
 
@@ -97,44 +48,51 @@ body {
         transition: background-color $bg-transition-time ease;
     }
 
+    .name-wrap {
+        @include vertical-center;
+        left: 5%;
+
+        p.name {
+            font-family: ExoRegular, Helvetica, sans-serif;
+            font-size: 96px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+    }
+
     &.vaporwave {
         background: url("../img/vaporwave/2.jpg") no-repeat center right fixed;
         background-size: cover;
 
-        .name-wrap {
+        .name-wrap p.name {
             font-family: AlienEncountersItal, sans-serif, Helvetica;
+            color:white;
+            position:relative;
+            width:1000px;
+            margin:0 auto;
 
-            p.name {
+            &:after {
+                content:attr(data-name);
+                position:absolute;
+                left:3px;
+                text-shadow:-1px 0 red;
+                top:0;
                 color:white;
-                position:relative;
-                width:1000px;
-                margin:0 auto;
+                overflow:hidden;
+                clip:rect(0,900px,0,0);
+                animation:noise-anim 2s infinite linear alternate-reverse;
+            }
 
-                &:after {
-                    content:attr(data-name);
-                    position:absolute;
-                    left:3px;
-                    text-shadow:-1px 0 red;
-                    top:0;
-                    color:white;
-                    //background:black;
-                    overflow:hidden;
-                    clip:rect(0,900px,0,0);
-                    animation:noise-anim 2s infinite linear alternate-reverse;
-                }
-
-                &:before{
-                    content:attr(data-name);
-                    position:absolute;
-                    left:-3px;
-                    text-shadow:1px 0 blue;
-                    top:0;
-                    color:white;
-                    //background:black;
-                    overflow:hidden;
-                    clip:rect(0,900px,0,0);
-                    animation:noise-anim-2 3s infinite linear alternate-reverse;
-                }
+            &:before{
+                content:attr(data-name);
+                position:absolute;
+                left:-3px;
+                text-shadow:1px 0 blue;
+                top:0;
+                color:white;
+                overflow:hidden;
+                clip:rect(0,900px,0,0);
+                animation:noise-anim-2 3s infinite linear alternate-reverse;
             }
         }
     }
@@ -142,25 +100,12 @@ body {
 
 
 .aesthetic {
-    position:fixed;
-    right: 2px;
-    top: 2px;
+    display: inline-block;
+    float:right;
+    margin: 5px 5px 0 0;
 
-    span {
-        &:hover {
-            cursor:pointer;
-        }
-    }
-}
-
-.name-wrap {
-    @include vertical-center;
-    left: 5%;
-
-    p.name {
-        font-size: 96px;
-        text-transform: uppercase;
-        margin: 0;
+    span:hover {
+        cursor:pointer;
     }
 }
 

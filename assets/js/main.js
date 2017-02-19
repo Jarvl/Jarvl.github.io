@@ -31,14 +31,46 @@ var colorSchemeNames = {
     vaporwave: 'a e s t h e t i c'
 };
 
-var colorSchemesArray = Object.values(colorSchemes);
+var colorSchemesArray = [];
+for (var o in colorSchemes) {
+    colorSchemesArray.push(colorSchemes[o]);
+}
+
 var colorSchemeNamesKeys = Object.keys(colorSchemeNames);
-var colorSchemeNamesValues = Object.values(colorSchemeNames);
+var colorSchemeNamesValues = [];
+for (var o in colorSchemeNames) {
+    colorSchemeNamesValues.push(colorSchemeNames[o]);
+}
 
 var currentColorScheme;
 
 function getNextColorSchemeIndex() {
     return stepArrayIndex(colorSchemeNamesKeys, colorSchemeIndex+1);
+}
+
+function switchColorScheme() {
+    // Get the current color scheme and change it
+    colorSchemeIndex = stepArrayIndex(colorSchemesArray, colorSchemeIndex+1);
+    // Set current color scheme values
+    currentColorScheme = colorSchemesArray[colorSchemeIndex];
+    // Reset color index
+    bgColorIndex = getRandomIndex(currentColorScheme);
+
+    switch (colorSchemeNamesKeys[colorSchemeIndex]) {
+        case 'vaporwave':
+            // Stop rotating
+            clearInterval(window.bgInterval);
+            // Set the URL relative to the html file
+
+            $('body').css('background-color', '').addClass('vaporwave');
+            break;
+
+        default:
+            // Set background color, remove image, start rotating
+            setBackground(bgColorIndex);
+            $('body').removeClass('vaporwave');
+            startBgInterval(bgTransitionTime);
+    }
 }
 
 $(function() {
@@ -57,35 +89,15 @@ $(function() {
 
     // Set random background initially
     setRandomBackground();
-    startNameInterval(15, 7, function() {
-        if (colorSchemeNamesKeys[colorSchemeIndex] == 'default') {
-            startBgInterval(bgTransitionTime);
-        }
-    });
+    startNameInterval(15, 7);
+
+    // Start background rotation
+    if (colorSchemeNamesKeys[colorSchemeIndex] == 'default') {
+        startBgInterval(bgTransitionTime);
+    }
 
     $("#bgColorToggle").click(function() {
-        // Get the current color scheme and change it
-        colorSchemeIndex = stepArrayIndex(colorSchemesArray, colorSchemeIndex+1);
-        // Set current color scheme values
-        currentColorScheme = colorSchemesArray[colorSchemeIndex];
-        // Reset color index
-        bgColorIndex = getRandomIndex(currentColorScheme);
-
-        switch (colorSchemeNamesKeys[colorSchemeIndex]) {
-            case 'vaporwave':
-                // Stop rotating
-                clearInterval(window.bgInterval);
-                // Set the URL relative to the html file
-
-                $('body').css('background-color', '').addClass('vaporwave');
-                break;
-
-            default:
-                // Set background color, remove image, start rotating
-                setBackground(bgColorIndex);
-                $('body').removeClass('vaporwave');
-                startBgInterval(bgTransitionTime);
-        }
+        switchColorScheme();
 
         // Set color scheme name and text
         $(this).data('color-scheme', colorSchemeNamesKeys[getNextColorSchemeIndex()]);
@@ -154,7 +166,7 @@ function stepArrayIndex(theArray, theIndex) {
     return theIndex;
 }
 
-function startNameInterval(delay, separation, cb) {
+function startNameInterval(delay, separation) {
     var tick = 0;
     window.nameInterval = setInterval(function() {
         // Set name
@@ -165,7 +177,6 @@ function startNameInterval(delay, separation, cb) {
         // Stop interval when name is filled in
         if (generatedName == name) {
             clearInterval(window.nameInterval);
-            cb();
         }
         tick++;
     }, 40);
