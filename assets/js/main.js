@@ -1,6 +1,6 @@
 var name = "ANDREW JARVIS";
 var nameArray = name.split("");
-var bgTransitionTime = 2000;
+var bgTransitionTime = 5000;
 var startNameIndex = 0;
 var bgColorIndex = 0;
 var bgIncrementer = Math.random() < 0.5 ? -1 : 1;
@@ -44,9 +44,42 @@ for (var o in colorSchemeNames) {
 
 var currentColorScheme;
 
+
+$(function() {
+    var initialColorSchemeName = $("#bgColorToggle").data('color-scheme');
+    currentColorScheme = colorSchemes[initialColorSchemeName];
+
+    for (var i = 0; i < colorSchemesArray.length; i++) {
+        if (colorSchemesArray[i] === currentColorScheme) {
+            colorSchemeIndex = i;
+            break;
+        }
+    }
+
+    // Set color scheme text
+    $("#bgColorToggle").text(colorSchemeNamesValues[getNextColorSchemeIndex()]);
+
+    startNameInterval(15, 7);
+
+    // Start background rotation
+    if (colorSchemeNamesKeys[colorSchemeIndex] == 'default') {
+        startBgInterval(bgTransitionTime);
+    }
+
+    $("#bgColorToggle").click(function() {
+        switchColorScheme();
+
+        // Set color scheme name and text
+        $(this).data('color-scheme', colorSchemeNamesKeys[getNextColorSchemeIndex()]);
+        $(this).text(colorSchemeNamesValues[getNextColorSchemeIndex()]);
+    });
+});
+
+
 function getNextColorSchemeIndex() {
     return stepArrayIndex(colorSchemeNamesKeys, colorSchemeIndex+1);
 }
+
 
 function switchColorScheme() {
     // Get the current color scheme and change it
@@ -72,39 +105,6 @@ function switchColorScheme() {
             startBgInterval(bgTransitionTime);
     }
 }
-
-$(function() {
-    var initialColorSchemeName = $("#bgColorToggle").data('color-scheme');
-    currentColorScheme = colorSchemes[initialColorSchemeName];
-
-    for (var i = 0; i < colorSchemesArray.length; i++) {
-        if (colorSchemesArray[i] === currentColorScheme) {
-            colorSchemeIndex = i;
-            break;
-        }
-    }
-
-    // Set color scheme text
-    $("#bgColorToggle").text(colorSchemeNamesValues[getNextColorSchemeIndex()]);
-
-    // Set random background initially
-    setRandomBackground();
-    startNameInterval(15, 7);
-
-    // Start background rotation
-    if (colorSchemeNamesKeys[colorSchemeIndex] == 'default') {
-        startBgInterval(bgTransitionTime);
-    }
-
-    $("#bgColorToggle").click(function() {
-        switchColorScheme();
-
-        // Set color scheme name and text
-        $(this).data('color-scheme', colorSchemeNamesKeys[getNextColorSchemeIndex()]);
-        $(this).text(colorSchemeNamesValues[getNextColorSchemeIndex()]);
-    });
-});
-
 
 
 function generateName(tick, delay, separation) {
@@ -134,9 +134,11 @@ function generateName(tick, delay, separation) {
     return generatedName;
 }
 
+
 function setBackground(index) {
     $("body").css('background-color', currentColorScheme[index]);
 }
+
 
 function setRandomBackground() {
     bgColorIndex = getRandomIndex(currentColorScheme);
@@ -144,14 +146,15 @@ function setRandomBackground() {
     setBackground(bgColorIndex);
 }
 
+
 function getRandomIndex(theArray) {
     return Math.floor(Math.random() * theArray.length);
 }
 
+
 function startBgInterval(interval) {
-    // Animate after name is filled in
-    $("body").addClass("animate-bg");
     setRandomBackground();
+    $("body").addClass("animate-bg");
 
     window.bgInterval = setInterval(function() {
         // Change bg color index, keep within range of array indicies
@@ -160,11 +163,13 @@ function startBgInterval(interval) {
     }, interval);
 }
 
+
 function stepArrayIndex(theArray, theIndex) {
     if (theIndex < 0) theIndex = theArray.length-1;
     else if (theIndex >= theArray.length) theIndex = 0;
     return theIndex;
 }
+
 
 function startNameInterval(delay, separation) {
     var tick = 0;
