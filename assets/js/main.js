@@ -1,4 +1,4 @@
-var name = "ANDREW JARVIS";
+var name = $("#name").data("name");
 var nameArray = name.split("");
 var bgTransitionTime = 5000;
 var startNameIndex = 0;
