@@ -123,12 +123,12 @@ $vaporwave-text-color: #ffffff;
 }
 
 html {
-    min-height:100%;
+    min-height:100vh;
 }
 
 body {
     animation: fadein 1.5s;
-    min-height:100%;
+    min-height:100vh;
     height: 100vh;
 
     &.animate-bg {
