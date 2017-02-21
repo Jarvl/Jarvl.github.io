@@ -44,6 +44,11 @@ for (var o in colorSchemeNames) {
 
 var currentColorScheme;
 
+// Mobile Chrome fix
+$(window).resize(function() {
+    $("body").height($(window).height());
+});
+
 
 $(function() {
     var initialColorSchemeName = $("#bgColorToggle").data('color-scheme');
