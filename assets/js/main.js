@@ -92,13 +92,13 @@ function switchColorScheme() {
             clearInterval(window.bgInterval);
             // Set the URL relative to the html file
 
-            $('html').css('background-color', '').addClass('vaporwave');
+            $('body').css('background-color', '').addClass('vaporwave');
             break;
 
         default:
             // Set background color, remove image, start rotating
             setBackground(bgColorIndex);
-            $('html').removeClass('vaporwave');
+            $('body').removeClass('vaporwave');
             startBgInterval(bgTransitionTime);
     }
 }
