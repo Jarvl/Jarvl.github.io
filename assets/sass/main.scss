@@ -123,13 +123,13 @@ $vaporwave-text-color: #ffffff;
 }
 
 html {
-    min-height:100vh;
+    min-height:100%;
 }
 
 body {
     animation: fadein 1.5s;
-    min-height:100vh;
-    height: 100vh;
+    min-height:100%;
+    height: 100%;
 
     &.animate-bg {
         transition: background-color $bg-transition-time ease;
@@ -156,7 +156,7 @@ a > i {
     background-size: cover;
 
     @include bp-xsmall {
-        background: url("../img/vaporwave/hm-sm.jpg") no-repeat center right fixed;
+        background: url("../img/vaporwave/hm-sm.jpg") no-repeat bottom right fixed;
         background-size: cover;
     }
 

@@ -44,11 +44,6 @@ for (var o in colorSchemeNames) {
 
 var currentColorScheme;
 
-// Mobile Chrome fix
-$(window).resize(function() {
-    $("body").height($(window).height());
-});
-
 
 $(function() {
     var initialColorSchemeName = $("#bgColorToggle").data('color-scheme');
@@ -97,13 +92,13 @@ function switchColorScheme() {
             clearInterval(window.bgInterval);
             // Set the URL relative to the html file
 
-            $('body').css('background-color', '').addClass('vaporwave');
+            $('html').css('background-color', '').addClass('vaporwave');
             break;
 
         default:
             // Set background color, remove image, start rotating
             setBackground(bgColorIndex);
-            $('body').removeClass('vaporwave');
+            $('html').removeClass('vaporwave');
             startBgInterval(bgTransitionTime);
     }
 }
