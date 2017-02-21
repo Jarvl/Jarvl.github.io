@@ -93,14 +93,12 @@ function switchColorScheme() {
             // Set the URL relative to the html file
 
             $('body').css('background-color', '').addClass('vaporwave');
-            $('#name').addClass('glitch');
             break;
 
         default:
             // Set background color, remove image, start rotating
             setBackground(bgColorIndex);
             $('body').removeClass('vaporwave');
-            $('#name').removeClass('glitch');
             startBgInterval(bgTransitionTime);
     }
 }
@@ -175,7 +173,7 @@ function startNameInterval(delay, separation) {
     window.nameInterval = setInterval(function() {
         // Set name
         var generatedName = generateName(tick, delay, separation);
-        $("#name").data('name', generatedName);
+        //$("#name").data('name', generatedName);
         $("#name").text(generatedName);
 
         // Stop interval when name is filled in

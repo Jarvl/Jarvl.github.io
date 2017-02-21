@@ -19,7 +19,12 @@ gulp.task('postcss', function() {
             remove: false,
             browsers: ["> 1%"]
         }) ]))
-        //.pipe(minify())
+        .pipe(gulp.dest('assets/css'));
+});
+
+gulp.task('minify-css', function() {
+    return gulp.src('assets/css/*.css')
+        .pipe(minify())
         .pipe(gulp.dest('assets/css'));
 });
 
@@ -36,3 +41,9 @@ gulp.task('watch-sass', ['full-sass'], function(done) {
 gulp.task('watch', ['watch-sass']);
 
 gulp.task('default', ['watch']);
+
+gulp.task('prod', function(done) {
+    runSequence('full-sass', 'minify-css', function() {
+        done();
+    });
+});

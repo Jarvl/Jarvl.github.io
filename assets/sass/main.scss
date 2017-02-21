@@ -3,10 +3,13 @@
 $fa-font-path:   "../fonts";
 $bg-transition-time: 5s;
 
+$default-text-color: #212121;
+$vaporwave-text-color: #ffffff;
+
 /********* IMPORTS *********/
 
 // PureCSS
-@import "purecss/_purecss.scss";
+//@import "purecss/_purecss.scss";
 // Font Awesome
 @import "font-awesome/font-awesome.scss";
 
@@ -55,6 +58,49 @@ $bg-transition-time: 5s;
   }
 }
 
+@mixin glitchText($name, $textColor, $steps, $height) {
+    color: $textColor;
+    position: relative;
+
+    &:before,
+    &:after {
+        content:attr(data-name);
+        position:absolute;
+        top:0;
+        clip:rect(0,900px,0,0);
+        overflow:hidden;
+    }
+
+    &:before{
+        left:-3px;
+        text-shadow:1px 0 blue;
+        animation:#{$name}-noise-anim-2 3s infinite linear alternate-reverse;
+    }
+
+    &:after {
+        left:3px;
+        text-shadow:-1px 0 red;
+        animation:#{$name}-noise-anim-1 2s infinite linear alternate-reverse;
+    }
+
+    @at-root {
+        @for $i from 1 through 2 {
+            @keyframes #{$name}-noise-anim-#{$i} {
+                @for $i from 0 through $steps {
+                    #{percentage($i*(1/$steps))} {
+                        clip:rect(
+                            random($height)+px,
+                            9999px,
+                            random($height)+px,
+                            0
+                        );
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 /********* STYLES *********/
 
@@ -78,16 +124,29 @@ $bg-transition-time: 5s;
 
 html {
     min-height:100%;
-    max-width: 100%;
 }
 
 body {
     animation: fadein 1.5s;
     min-height:100%;
-    max-width: 100vw;
 
     &.animate-bg {
         transition: background-color $bg-transition-time ease;
+    }
+}
+
+a > i {
+    color: $default-text-color;
+    text-decoration: none;
+    opacity: .8;
+    transition: opacity .5s ease;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:active {
+        color: #000;
     }
 }
 
@@ -95,44 +154,35 @@ body {
     background: url("../img/vaporwave/hm.jpg") no-repeat center right fixed;
     background-size: cover;
 
-    .content-wrap .name-wrap p.name {
-        font-family: AlienEncountersItal, sans-serif, Helvetica;
-        color:white;
-        margin:0 auto;
-        position:relative;
-        width:1000px;
+    @include bp-xsmall {
+        background: url("../img/vaporwave/hm-sm.jpg") no-repeat center right fixed;
+        background-size: cover;
+    }
 
-        &.glitch {
-            &:after {
-                content:attr(data-name);
-                position:absolute;
-                left:3px;
-                text-shadow:-1px 0 red;
-                top:0;
-                color:white;
-                overflow:hidden;
-                clip:rect(0,900px,0,0);
-                animation:noise-anim 2s infinite linear alternate-reverse;
-            }
+    .content-wrap {
+        color: $vaporwave-text-color;
 
-            &:before{
-                content:attr(data-name);
-                position:absolute;
-                left:-3px;
-                text-shadow:1px 0 blue;
-                top:0;
-                color:white;
-                overflow:hidden;
-                clip:rect(0,900px,0,0);
-                animation:noise-anim-2 3s infinite linear alternate-reverse;
+        .name-wrap p.name {
+            font-family: AlienEncountersItal, sans-serif, Helvetica;
+            margin: 0 auto;
+            @include glitchText(display-name, $vaporwave-text-color, 25, 100);
+        }
+
+        a > i {
+            color: $vaporwave-text-color;
+
+            &:active {
+                color: $vaporwave-text-color;
             }
         }
     }
 }
 
 .content-wrap {
+    color: $default-text-color;
     @include vertical-center;
     left: 3%;
+    width: 97%;
 
     @include bp-xsmall {
         top: 25%;
@@ -178,22 +228,7 @@ body {
             @include bp-xsmall {
                 font-size: 1rem;
                 clear: both;
-                margin: 2rem 0 0 0;
-            }
-
-            a {
-                color: #333;
-                text-decoration: none;
-                transition: text-shadow .5s ease;
-
-                &:hover {
-                    color: #111;
-                    text-shadow: 3px 1px 30px #333;
-                }
-
-                &:active {
-                    color: #000;
-                }
+                margin: 1rem 0 1rem 0;
             }
         }
     }
@@ -216,22 +251,4 @@ body {
 @keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
-}
-
-@keyframes noise-anim {
-    $steps:25;
-    @for $i from 0 through $steps {
-        #{percentage($i*(1/$steps))} {
-            clip:rect(random(100)+px,9999px,random(100)+px,0);
-        }
-    }
-}
-
-@keyframes noise-anim-2 {
-    $steps:25;
-    @for $i from 0 through $steps {
-        #{percentage($i*(1/$steps))} {
-            clip:rect(random(100)+px,9999px,random(100)+px,0);
-        }
-    }
 }
