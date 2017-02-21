@@ -152,13 +152,13 @@ a > i {
 }
 
 .vaporwave {
-    background: url("../img/vaporwave/hm.jpg") no-repeat center right fixed;
+    background: url("../img/vaporwave/hm.jpg") no-repeat right bottom fixed;
     background-size: cover;
 
-    @include bp-xsmall {
+    /*@include bp-xsmall {
         background: url("../img/vaporwave/hm-sm.jpg") no-repeat bottom right fixed;
         background-size: cover;
-    }
+    }*/
 
     .content-wrap {
         color: $vaporwave-text-color;
