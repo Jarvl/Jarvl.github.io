@@ -5,6 +5,8 @@ var startNameIndex = 0;
 var bgColorIndex = 0;
 var bgIncrementer = Math.random() < 0.5 ? -1 : 1;
 var colorSchemeIndex = 0;
+
+// Add new colorSchemes here
 var colorSchemes = {
     default: [
         '#26A69A',
@@ -26,6 +28,8 @@ var colorSchemes = {
         '#eecd69'
     ]
 };
+
+// Add display name for color scheme here
 var colorSchemeNames = {
     default: 'vanilla',
     vaporwave: 'a e s t h e t i c'
@@ -46,6 +50,7 @@ var currentColorScheme;
 
 
 $(function() {
+
     var initialColorSchemeName = $("#bgColorToggle").data('color-scheme');
     currentColorScheme = colorSchemes[initialColorSchemeName];
 
@@ -86,18 +91,26 @@ function switchColorScheme() {
     // Reset color index
     bgColorIndex = getRandomIndex(currentColorScheme);
 
+    // Add switch case for color scheme here
     switch (colorSchemeNamesKeys[colorSchemeIndex]) {
         case 'vaporwave':
-            // Stop rotating
+            // Address bar bg fix
+            if ($(window).height() <= 768) {
+                $(".bg").height( $(window).height() + 60 );
+            }
+
+            // Stop rotating colors
             clearInterval(window.bgInterval);
             // Set the URL relative to the html file
-
             $('body').css('background-color', '').addClass('vaporwave');
-            break;
 
+            break;
         default:
+
+            // Reset bg height to normal
+            $(".bg").height( $(window).height() );
             // Set background color, remove image, start rotating
-            setBackground(bgColorIndex);
+            setBackgroundColor(bgColorIndex);
             $('body').removeClass('vaporwave');
             startBgInterval(bgTransitionTime);
     }
@@ -132,7 +145,7 @@ function generateName(tick, delay, separation) {
 }
 
 
-function setBackground(index) {
+function setBackgroundColor(index) {
     $("body").css('background-color', currentColorScheme[index]);
 }
 
@@ -140,7 +153,7 @@ function setBackground(index) {
 function setRandomBackground() {
     bgColorIndex = getRandomIndex(currentColorScheme);
     // Set background initially
-    setBackground(bgColorIndex);
+    setBackgroundColor(bgColorIndex);
 }
 
 
@@ -156,7 +169,7 @@ function startBgInterval(interval) {
     window.bgInterval = setInterval(function() {
         // Change bg color index, keep within range of array indicies
         bgColorIndex = stepArrayIndex(currentColorScheme, bgColorIndex+bgIncrementer);
-        setBackground(bgColorIndex);
+        setBackgroundColor(bgColorIndex);
     }, interval);
 }
 
