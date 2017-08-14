@@ -62,7 +62,7 @@ $(function() {
     }
 
     // Set color scheme text
-    $("#bgColorToggle").text(colorSchemeNamesValues[getNextColorSchemeIndex()]);
+    $("#bgColorToggle").text( setToggleText(colorSchemeNamesValues[getNextColorSchemeIndex()]) );
 
     startNameInterval(15, 7);
     switchColorScheme();
@@ -73,10 +73,14 @@ $(function() {
 
         // Set color scheme name and text
         $(this).data('color-scheme', colorSchemeNamesKeys[getNextColorSchemeIndex()]);
-        $(this).text(colorSchemeNamesValues[getNextColorSchemeIndex()]);
+        $(this).text( setToggleText(colorSchemeNamesValues[getNextColorSchemeIndex()]) );
     });
 });
 
+
+function setToggleText(csName) {
+    return "Switch to " + csName;
+}
 
 function getNextColorSchemeIndex() {
     return stepArrayIndex(colorSchemeNamesKeys, colorSchemeIndex+1);
