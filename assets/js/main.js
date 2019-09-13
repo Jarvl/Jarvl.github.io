@@ -1,4 +1,4 @@
-var name = $("#name").data("name");
+var name = document.getElementById("name").getAttribute("data-name");
 var nameArray = name.split("");
 var bgTransitionTime = 5000;
 var startNameIndex = 0;
@@ -49,9 +49,10 @@ for (var o in colorSchemeNames) {
 var currentColorScheme;
 
 
-$(function() {
+document.addEventListener("DOMContentLoaded", function() {
+    var bgColorToggleEl = document.getElementById("bgColorToggle");
 
-    var initialColorSchemeName = $("#bgColorToggle").data('color-scheme');
+    var initialColorSchemeName = bgColorToggleEl.getAttribute("data-color-scheme");
     currentColorScheme = colorSchemes[initialColorSchemeName];
 
     for (var i = 0; i < colorSchemesArray.length; i++) {
@@ -62,18 +63,18 @@ $(function() {
     }
 
     // Set color scheme text
-    $("#bgColorToggle").text( setToggleText(colorSchemeNamesValues[getNextColorSchemeIndex()]) );
+    bgColorToggleEl.innerHTML = setToggleText(colorSchemeNamesValues[getNextColorSchemeIndex()])
 
     startNameInterval(15, 7);
     switchColorScheme();
 
-    $("#bgColorToggle").click(function() {
+    bgColorToggleEl.addEventListener("click", function() {
         colorSchemeIndex++;
         switchColorScheme();
 
         // Set color scheme name and text
-        $(this).data('color-scheme', colorSchemeNamesKeys[getNextColorSchemeIndex()]);
-        $(this).text( setToggleText(colorSchemeNamesValues[getNextColorSchemeIndex()]) );
+        this.setAttribute('data-color-scheme', colorSchemeNamesKeys[getNextColorSchemeIndex()]);
+        this.innerHTML = setToggleText(colorSchemeNamesValues[getNextColorSchemeIndex()]);
     });
 });
 
@@ -95,27 +96,30 @@ function switchColorScheme() {
     // Reset color index
     bgColorIndex = getRandomIndex(currentColorScheme);
 
+    var windowHeight = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+    bgEl = document.getElementById("background");
+
     // Add switch case for color scheme here
     switch (colorSchemeNamesKeys[colorSchemeIndex]) {
         case 'vaporwave':
             // Address bar bg fix
-            if ($(window).height() <= 768) {
-                $(".bg").height( $(window).height() + 60 );
+            if (windowHeight <= 768) {
+                bgEl.style.height = (windowHeight + 60) + "px";
             }
 
             // Stop rotating colors
             clearInterval(window.bgInterval);
-            // Set the URL relative to the html file
-            $('body').css('background-color', '').addClass('vaporwave');
-
+            // Reset styles
+            document.body.style.backgroundColor = '';
+            document.body.classList.add("vaporwave");
             break;
         default:
-
             // Reset bg height to normal
-            $(".bg").height( $(window).height() );
+            bgEl.style.height = windowHeight + "px";
             // Set background color, remove image, start rotating
             setBackgroundColor(bgColorIndex);
-            $('body').removeClass('vaporwave');
+            document.body.classList.remove("vaporwave");
             startBgInterval(bgTransitionTime);
     }
 }
@@ -150,7 +154,7 @@ function generateName(tick, delay, separation) {
 
 
 function setBackgroundColor(index) {
-    $("body").css('background-color', currentColorScheme[index]);
+    document.body.style.backgroundColor = currentColorScheme[index];
 }
 
 
@@ -168,7 +172,7 @@ function getRandomIndex(theArray) {
 
 function startBgInterval(interval) {
     setRandomBackground();
-    $("body").addClass("animate-bg");
+    document.body.classList.add("animate-bg");
 
     window.bgInterval = setInterval(function() {
         // Change bg color index, keep within range of array indicies
@@ -190,8 +194,7 @@ function startNameInterval(delay, separation) {
     window.nameInterval = setInterval(function() {
         // Set name
         var generatedName = generateName(tick, delay, separation);
-        //$("#name").data('name', generatedName);
-        $("#name").text(generatedName);
+        document.getElementById("name").innerHTML = generatedName;
 
         // Stop interval when name is filled in
         if (generatedName == name) {
