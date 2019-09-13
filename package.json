@@ -4,13 +4,14 @@
   "description": "Single page personal site",
   "scripts": {
     "dev": "npm run watch:css",
-    "build": "npm run css:prod",
+    "build": "npm npm-run-all css:prod js:prod",
     "css:prod": "npm-run-all --sequential css:dev css:minify",
     "css:dev": "npm-run-all --sequential css:compile css:prefix",
     "css:compile": "node-sass --omit-source-map-url --output-style expanded assets/scss/main.scss assets/css/main.css",
     "css:minify": "cleancss --level 1 --inline all --output assets/css/main.min.css assets/css/main.css",
     "css:prefix": "postcss --use autoprefixer --replace \"assets/css/*.css\" \"!assets/css/*.min.css\"",
-    "watch:css": "nodemon --watch assets/scss -e scss -x \"npm run css:dev\""
+    "watch:css": "nodemon --watch assets/scss -e scss -x \"npm run css:dev\"",
+    "js:prod": "uglifyjs --compress --mangle --output assets/js/main.min.js assets/js/main.js"
   },
   "author": "Andrew Jarvis",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "node-sass": "^4.10.0",
     "nodemon": "^1.18.7",
     "npm-run-all": "^4.1.5",
-    "postcss-cli": "^6.1.3"
+    "postcss-cli": "^6.1.3",
+    "uglify-js": "^3.6.0"
   }
 }
