@@ -3,18 +3,23 @@
   "version": "1.0.0",
   "description": "Single page personal site",
   "scripts": {
-    "dev": "gulp",
-    "watch": "gulp watch"
+    "dev": "npm run watch:css",
+    "build": "npm run css:prod",
+    "css:prod": "npm-run-all --sequential css:dev css:minify",
+    "css:dev": "npm-run-all --sequential css:compile css:prefix",
+    "css:compile": "node-sass --omit-source-map-url --output-style expanded assets/scss/main.scss assets/css/main.css",
+    "css:minify": "cleancss --level 1 --inline all --output assets/css/main.min.css assets/css/main.css",
+    "css:prefix": "postcss --use autoprefixer --replace \"assets/css/*.css\" \"!assets/css/*.min.css\"",
+    "watch:css": "nodemon --watch assets/scss -e scss -x \"npm run css:dev\""
   },
   "author": "Andrew Jarvis",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^6.7.3",
-    "gulp": "^3.9.1",
-    "gulp-minify-css": "^1.2.4",
-    "gulp-postcss": "^6.3.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-watch": "^4.3.11",
-    "run-sequence": "^1.2.2"
+    "autoprefixer": "^9.6.1",
+    "clean-css-cli": "^4.3.0",
+    "node-sass": "^4.10.0",
+    "nodemon": "^1.18.7",
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^6.1.3"
   }
 }
