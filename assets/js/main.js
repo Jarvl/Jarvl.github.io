@@ -96,7 +96,7 @@ function switchColorScheme() {
     // Reset color index
     bgColorIndex = getRandomIndex(currentColorScheme);
 
-    var windowHeight = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
     bgEl = document.getElementById("background");
 

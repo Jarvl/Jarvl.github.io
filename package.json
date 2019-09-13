@@ -4,7 +4,7 @@
   "description": "Single page personal site",
   "scripts": {
     "dev": "npm run watch:css",
-    "build": "npm npm-run-all css:prod js:prod",
+    "build": "npm-run-all css:prod js:prod",
     "css:prod": "npm-run-all --sequential css:dev css:minify",
     "css:dev": "npm-run-all --sequential css:compile css:prefix",
     "css:compile": "node-sass --omit-source-map-url --output-style expanded assets/scss/main.scss assets/css/main.css",
